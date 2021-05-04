@@ -1,6 +1,7 @@
 from datetime import datetime
 from notion.client import NotionClient
 import requests
+import pytz
 import os
     
 token = os.environ.get("TOKEN")
@@ -16,7 +17,8 @@ def sendMessage(msg, eventStart, eventEnd):
     requests.get(url, params={'chat_id':'1045229863','text': msg, 'parse_mode':'HTML'})
 
 def main():
-    now = datetime.now()
+    tz = pytz.timezone("America/Costa_Rica")
+    now = datetime.now(tz)
     print(now.strftime("%A"))
 
     client = NotionClient(token_v2=token)
