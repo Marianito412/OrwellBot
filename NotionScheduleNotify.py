@@ -9,7 +9,7 @@ url = os.environ.get("NOTION_URL")
 
 print(f"{token}\n{url}")
 def sendMessage(msg, eventStart, eventEnd):
-    BOT_API_KEY = os.environ("ORWELL_API")
+    BOT_API_KEY = os.environ.get("ORWELL_API")
     url = 'https://api.telegram.org/bot{}/sendMessage'.format(BOT_API_KEY)
 
     msg = f"<b>{msg}</b>\n{eventStart}-{eventEnd}"
