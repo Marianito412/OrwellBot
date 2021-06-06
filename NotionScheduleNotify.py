@@ -19,7 +19,15 @@ def sendMessage(msg, eventStart, eventEnd):
 def main():
     tz = pytz.timezone("America/Costa_Rica")
     now = datetime.now(tz)
-    print(now.strftime("%A"))
+    print(now.weekday(), now.day)
+
+    isEarly = (now.time >= datetime.strptime("07:00 AM", "%I:%M %p").time()) and (now.time >= datetime.strptime("08:00 AM", "%I:%M %p").time())
+
+    if (now.weekday() == 3) and  isEarly:
+        sendMessage("**New Free Game in Epic Games Store, Grab It**", "", "")
+    
+    if (now.weekday() == 1 and now.day <=7) and isEarly:
+        sendMessage("**New Unreal Engine MarketPlace Content, Check It Out**", "", "")
 
     client = NotionClient(token_v2=token)
     database = client.get_collection_view(url)
