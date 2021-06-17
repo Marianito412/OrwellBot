@@ -4,14 +4,21 @@ import requests
 import pytz
 import os
 
-token = os.environ.get("TOKEN")
-url = os.environ.get("NOTION_URL")
+DEBUG = False
 
-print(f"{token}\n{url}")
-def sendMessage(msg, eventStart, eventEnd):
+if DEBUG:
+    import keys
+
+    token = keys.Token
+    url = keys.url
+    BOT_API_KEY = keys.orwellKey
+else:
+    token = os.environ.get("TOKEN")
+    url = os.environ.get("NOTION_URL")
     BOT_API_KEY = os.environ.get("ORWELL_API")
-    url = 'https://api.telegram.org/bot{}/sendMessage'.format(BOT_API_KEY)
 
+def sendMessage(msg, eventStart, eventEnd):
+    url = 'https://api.telegram.org/bot{}/sendMessage'.format(BOT_API_KEY)
     msg = f"<b>{msg}</b>\n{eventStart}-{eventEnd}"
 
     requests.get(url, params={'chat_id':'1045229863','text': msg, 'parse_mode':'HTML'})
@@ -25,7 +32,6 @@ def isBetween(Start: str, End: str, format="%I:%M %p") -> bool:
 def main():
     tz = pytz.timezone("America/Costa_Rica")
     now = datetime.now(tz)
-    print(now.weekday(), now.day)
 
     isEarly = isBetween("07:00 AM", "08:00 AM")
 
@@ -49,7 +55,7 @@ def main():
         if (now.time()>=eventStart and now.time()<=eventEnd) and (now.strftime("%A") in i.Days):
 
             firstHour = [x.replace("md", "pm").upper() for x in i.Hours[0].split("→")]
-            if isBetween(firstHour[0], firstHour[1], format="%I:%M%p"):
+            if isBetween(firstHour[0], firstHour[-1], format="%I:%M%p"):
                 sendMessage(i.name, eventStart.strftime("%I:%M %p"), eventEnd.strftime("%I:%M %p"))
 
 if __name__ == "__main__":
