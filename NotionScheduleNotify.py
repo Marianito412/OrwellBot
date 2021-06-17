@@ -27,7 +27,7 @@ def main():
     now = datetime.now(tz)
     print(now.weekday(), now.day)
 
-    isEarly = isBetween("07:00 AM", "08:00 PM")
+    isEarly = isBetween("07:00 AM", "08:00 AM")
 
     if (now.weekday() == 3) and  isEarly:
         sendMessage("New Free Game in Epic Games Store, Grab It", "", "")
