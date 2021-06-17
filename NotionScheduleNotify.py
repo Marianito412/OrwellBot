@@ -48,7 +48,7 @@ def main():
 
         if (now.time()>=eventStart and now.time()<=eventEnd) and (now.strftime("%A") in i.Days):
 
-            firstHour = [x.replace("md", "pm").upper() for x in Hours[0].split("→")]
+            firstHour = [x.replace("md", "pm").upper() for x in i.Hours[0].split("→")]
             if isBetween(firstHour[0], firstHour[1], format="%I:%M%p"):
                 sendMessage(i.name, eventStart.strftime("%I:%M %p"), eventEnd.strftime("%I:%M %p"))
 
